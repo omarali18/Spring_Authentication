@@ -27,10 +27,10 @@ public class SecurityConfig {
 
 
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
 //    @Bean
 //    public UserDetailsService userDetailsService() {
@@ -47,7 +47,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(
-                        authorizeRequests -> authorizeRequests.anyRequest().authenticated()
+                        req -> req
+                                .requestMatchers("/register/**").permitAll()
+                                .anyRequest().authenticated()
                 ).formLogin(Customizer.withDefaults())
                 .logout(Customizer.withDefaults())
                 .userDetailsService(userDetailsService);

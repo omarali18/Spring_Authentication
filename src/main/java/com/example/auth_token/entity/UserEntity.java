@@ -33,10 +33,10 @@ public class UserEntity implements UserDetails {
     private String lastName;
 
     @Column(
-            name = "user_name",
+            name = "username",
             nullable = false
     )
-    private String userName;
+    private String username;
 
     @Column(
             name = "password",
@@ -62,13 +62,13 @@ public class UserEntity implements UserDetails {
     public UserEntity(
             String firstName,
             String lastName,
-            String userName,
+            String username,
             String password,
             String email,
             boolean enabled) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
         this.email = email;
         this.enabled = enabled;
@@ -87,7 +87,7 @@ public class UserEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override
@@ -136,11 +136,11 @@ public class UserEntity implements UserDetails {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public void setPassword(String password) {

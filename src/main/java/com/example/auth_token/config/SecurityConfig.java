@@ -1,5 +1,6 @@
 package com.example.auth_token.config;
 
+import com.example.auth_token.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -18,21 +19,29 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final CustomUserDetailsService  userDetailsService;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("omar")
-                .password(passwordEncoder().encode("12345"))
-                .roles("ADMIN")
-                .build();
-
-        return new InMemoryUserDetailsManager(user);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+//        UserDetails user = User
+//                .withUsername("omar")
+//                .password(passwordEncoder().encode("12345"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        return new InMemoryUserDetailsManager(user);
+//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +50,7 @@ public class SecurityConfig {
                         authorizeRequests -> authorizeRequests.anyRequest().authenticated()
                 ).formLogin(Customizer.withDefaults())
                 .logout(Customizer.withDefaults())
-                .userDetailsService(userDetailsService());
+                .userDetailsService(userDetailsService);
         return http.build();
     }
 

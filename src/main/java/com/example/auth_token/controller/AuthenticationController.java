@@ -4,10 +4,7 @@ import com.example.auth_token.entity.UserEntity;
 import com.example.auth_token.service.CustomUserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -38,5 +35,11 @@ public class AuthenticationController {
                 "message",
                 "Please Confirm your email address.");
         return "redirect:/";
+    }
+
+    @GetMapping("/confirmToken")
+    public String confirmToken(@RequestParam("token") String token, Model model) {
+        userDetailsService.confirmToken(token);
+        return "confirmToken";
     }
 }
